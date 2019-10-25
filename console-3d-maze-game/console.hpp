@@ -8,11 +8,11 @@
 
 #pragma once
 
-class Buffer
+class Console
 {
 public:
-	Buffer(const Size2D &screenSize);
-	~Buffer();
+	Console(const Size2D &screenSize);
+	~Console();
 
 	void WriteOutput(const CHAR_INFO* buffer);
 	void WriteOutput();

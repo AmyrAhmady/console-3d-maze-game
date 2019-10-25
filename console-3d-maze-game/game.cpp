@@ -13,7 +13,7 @@
 #include <vector>
 #include "common.hpp"
 #include "game.hpp"
-#include "buffer.hpp"
+#include "console.hpp"
 #include "player.hpp"
 
 Game::Game()
@@ -43,7 +43,7 @@ Game::Game()
 	mapPainting += L"================";
 
 	player = std::unique_ptr<Player>(new Player());
-	this->output = std::unique_ptr<Buffer>(new Buffer({ screenWidth, screenHeight }));
+	this->output = std::unique_ptr<Console>(new Console({ screenWidth, screenHeight }));
 }
 
 Game::Game(const std::wstring &map, const Size2D &screenSize, const Size2D &radarSize)
@@ -53,7 +53,7 @@ Game::Game(const std::wstring &map, const Size2D &screenSize, const Size2D &rada
 	mapPainting = map;
 
 	player = std::unique_ptr<Player>(new Player());
-	this->output = std::unique_ptr<Buffer>(new Buffer(screenSize));
+	this->output = std::unique_ptr<Console>(new Console(screenSize));
 }
 
 Game::~Game()

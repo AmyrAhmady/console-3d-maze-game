@@ -9,7 +9,7 @@
 #pragma once
 #include <iostream>
 
-class Buffer;
+class Console;
 class Player;
 
 class Game
@@ -31,7 +31,7 @@ private:
 	std::wstring mapPainting;
 	Size2D mapSize;
 	Size2D screenSize;
-	std::unique_ptr<Buffer> output;
+	std::unique_ptr<Console> output;
 	std::unique_ptr<Player> player;
 
 	float GetRayDirection(float xCoord);

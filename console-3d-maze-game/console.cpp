@@ -9,9 +9,9 @@
 #include <Windows.h>
 #include "common.hpp"
 #include "game.hpp"
-#include "buffer.hpp"
+#include "console.hpp"
 
-Buffer::Buffer(const Size2D &screenSize)
+Console::Console(const Size2D &screenSize)
 {
 	outputBuffer = new CHAR_INFO[screenSize.width * screenSize.height];
 	windowBuffer = { 0, 0, screenSize.width, screenSize.height };
@@ -23,23 +23,23 @@ Buffer::Buffer(const Size2D &screenSize)
 	this->screenSize = screenSize;
 }
 
-Buffer::~Buffer()
+Console::~Console()
 {
 	delete outputBuffer;
 	screenSize = {};
 }
 
-void Buffer::WriteOutput()
+void Console::WriteOutput()
 {
 	WriteConsoleOutput(console, outputBuffer, { screenSize.width, screenSize.height }, { 0, 0 }, &windowBuffer);
 }
 
-void Buffer::WriteOutput(const CHAR_INFO* buffer)
+void Console::WriteOutput(const CHAR_INFO* buffer)
 {
 	WriteConsoleOutput(console, buffer, { screenSize.width, screenSize.height }, { 0, 0 }, &windowBuffer);
 }
 
-void Buffer::SetChar(wchar_t character, unsigned short attributes, int index)
+void Console::SetChar(wchar_t character, unsigned short attributes, int index)
 {
 	outputBuffer[index].Char.UnicodeChar = character;
 	outputBuffer[index].Attributes = attributes;
