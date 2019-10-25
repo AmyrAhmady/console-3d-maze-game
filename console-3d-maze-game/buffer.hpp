@@ -11,7 +11,7 @@
 class Buffer
 {
 public:
-
+	Buffer(const Size2D &screenSize);
 	Buffer(Game *phandle, size_t buffSize);
 	~Buffer();
 

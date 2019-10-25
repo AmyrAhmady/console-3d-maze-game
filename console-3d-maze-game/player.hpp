@@ -11,7 +11,6 @@
 class Player
 {
 public:
-
 	float speed;
 	float stepSize;
 	float camDepth;
@@ -30,7 +29,6 @@ public:
 	Vector2 GetPosition() { return position; }
 
 private:
-
 	float GetRayDirection(float xCoord);
 	std::pair<int, int> SendRayCast(const Vector2 &direction);
 

@@ -15,7 +15,6 @@ class Player;
 class Game
 {
 public:
-
 	SMALL_RECT windowBuffer;
 	HANDLE consoleHandle;
 
