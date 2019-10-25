@@ -6,15 +6,14 @@
 	Repository: https://github.com/AmyrAhmady/Console-3D-Maze-Game
 */
 
-#include <math.h>
+#include <cmath>
 #include <iostream>
 #include "common.hpp"
 #include "game.hpp"
 #include "player.hpp"
 
-Player::Player(Game *handle)
+Player::Player()
 {
-	gameHandle = handle;
 	camFOV = 3.24159f / 4.0f;
 	camDepth = 16.0f;
 	speed = 5.0f;

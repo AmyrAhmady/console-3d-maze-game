@@ -16,7 +16,7 @@ public:
 	float camDepth;
 	float camFOV;
 
-	Player(Game *handle);
+	Player();
 	~Player();
 
 	void Move(MOVE_TYPE moveType, float delay);
@@ -28,7 +28,6 @@ public:
 	Vector2 GetPosition() { return position; }
 
 private:
-	Game *gameHandle;
 	Vector2 position = { 0.0f, 0.0f };
 	float angle = 0.0;
 };
