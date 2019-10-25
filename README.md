@@ -9,4 +9,9 @@ If you ever see random characters on walls instead of block characters ( â–ˆ, â–
 ## Preview
 (No, preview is not laggy, it's your internet trying to load this ~6mb GIF file! it will be fine when it's finally done loading all frames.)
 
-![Preview gif](https://cdn.discordapp.com/attachments/466249612529893386/636653512880816128/bruh_2.gif)
+(Click on it, github doesn't let me have such a big file as an embed for preview..)
+
+https://cdn.discordapp.com/attachments/466249612529893386/636653512880816128/bruh_2.gif
+
+## Download
+Well, check [Releases tab](https://github.com/AmyrAhmady/console-3d-maze-game/releases) !
