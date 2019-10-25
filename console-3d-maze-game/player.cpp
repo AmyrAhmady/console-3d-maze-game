@@ -58,11 +58,12 @@ float Player::GetRayDirection(float xCoord)
 	return (angle - camFOV / 2.0f) + (xCoord / static_cast<float>(gameHandle->GetScreenSize().width)) * camFOV;
 }
 
-IntPair Player::SendRayCast(const Vector2 &direction)
+std::pair<int, int> Player::SendRayCast(const Vector2 &direction)
 {
-	IntPair tempVar;
-	tempVar.a = static_cast<int>(position.fX + direction.fX);
-	tempVar.b = static_cast<int>(position.fY + direction.fY);
+	std::pair<int, int> tempVar = {
+		static_cast<int>(position.fX + direction.fX),
+		static_cast<int>(position.fY + direction.fY)
+	};
 	return tempVar;
 }
 
@@ -80,17 +81,17 @@ std::pair<float, bool> Player::GetCollideStatus(int x)
 	while (!isHittingWall && wallDistance < camDepth)
 	{
 		wallDistance += stepSize;
-		IntPair rayTest = SendRayCast({ fEyeX * wallDistance, fEyeY * wallDistance });
+		std::pair<int, int> rayTest = SendRayCast({ fEyeX * wallDistance, fEyeY * wallDistance });
 
-		if (rayTest.a < 0 || rayTest.a >= mapSize.width || rayTest.b < 0 || rayTest.b >= mapSize.height)
+		if (rayTest.first < 0 || rayTest.first >= mapSize.width || rayTest.second < 0 || rayTest.second >= mapSize.height)
 		{
 			isHittingWall = true;
 			wallDistance = stepSize;
 		}
 		else
 		{
-			if (gameHandle->GetMapChar(rayTest.a * mapSize.width + rayTest.b) == '=' ||
-				gameHandle->GetMapChar(rayTest.a * mapSize.width + rayTest.b) == '|')
+			if (gameHandle->GetMapChar(rayTest.first * mapSize.width + rayTest.second) == '=' ||
+				gameHandle->GetMapChar(rayTest.first * mapSize.width + rayTest.second) == '|')
 			{
 				isHittingWall = true;
 
@@ -99,8 +100,8 @@ std::pair<float, bool> Player::GetCollideStatus(int x)
 				for (int tx = 0; tx < 2; tx++)
 					for (int ty = 0; ty < 2; ty++)
 					{
-						float vy = static_cast<float>(rayTest.b) + ty - position.fY;
-						float vx = static_cast<float>(rayTest.a) + tx - position.fX;
+						float vy = static_cast<float>(rayTest.second) + ty - position.fY;
+						float vx = static_cast<float>(rayTest.first) + tx - position.fX;
 						float d = sqrt(vx*vx + vy * vy);
 						float dot = (fEyeX * vx / d) + (fEyeY * vy / d);
 						p.push_back(std::make_pair(d, dot));

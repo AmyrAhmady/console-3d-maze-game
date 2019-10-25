@@ -27,12 +27,6 @@ struct Size2D
 	short height;
 };
 
-struct IntPair
-{
-	int a;
-	int b;
-};
-
 enum MOVE_TYPE
 {
 	MOVE_BACKWARD,

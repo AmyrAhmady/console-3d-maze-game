@@ -32,7 +32,7 @@ public:
 private:
 
 	float GetRayDirection(float xCoord);
-	IntPair SendRayCast(const Vector2 &direction);
+	std::pair<int, int> SendRayCast(const Vector2 &direction);
 
 	Game *gameHandle;
 	Vector2 position = { 0.0f, 0.0f };
