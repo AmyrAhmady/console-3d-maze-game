@@ -34,6 +34,9 @@ private:
 	Buffer *output;
 	Player *player;
 
+	float GetRayDirection(float xCoord);
+	std::pair<int, int> SendRayCast(const Vector2 &direction);
+	std::pair<float, bool> GetCollideStatus(int x);
 	short GetWallShade(float distance);
 	short GetFloorShade(int y);
 	void DrawRadar(const Vector2 &playerPos);

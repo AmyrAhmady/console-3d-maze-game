@@ -8,6 +8,8 @@
 
 #include <iostream>
 #include <chrono>
+#include <algorithm>
+#include <vector>
 #include "common.hpp"
 #include "game.hpp"
 #include "buffer.hpp"
@@ -107,7 +109,7 @@ void Game::Play()
 
 		for (int x = 0; x < screenSize.width; x++)
 		{
-			std::pair<float, bool> collideData = player->GetCollideStatus(x);
+			std::pair<float, bool> collideData = GetCollideStatus(x);
 			float wallDistance = collideData.first;
 			bool isBoundary = collideData.second;
 
@@ -140,6 +142,78 @@ void Game::Play()
 		output->WriteOutput();
 
 	}
+}
+
+float Game::GetRayDirection(float xCoord)
+{
+	return (player->GetAngle() - player->camFOV / 2.0f) + (xCoord / static_cast<float>(screenSize.width)) * player->camFOV;
+}
+
+std::pair<int, int> Game::SendRayCast(const Vector2 &direction)
+{
+	Vector2 position = player->GetPosition();
+	std::pair<int, int> tempVar = {
+		static_cast<int>(position.fX + direction.fX),
+		static_cast<int>(position.fY + direction.fY)
+	};
+	return tempVar;
+}
+
+std::pair<float, bool> Game::GetCollideStatus(int x)
+{
+	Vector2 position = player->GetPosition();
+	float rayAngle = GetRayDirection(static_cast<float>(x));
+	float wallDistance = 0.0f;
+	bool isBoundary = false;
+	bool isHittingWall = false;
+	float fEyeX = sinf(rayAngle);
+	float fEyeY = cosf(rayAngle);
+
+	while (!isHittingWall && wallDistance < player->camDepth)
+	{
+		wallDistance += player->stepSize;
+		std::pair<int, int> rayTest = SendRayCast({ fEyeX * wallDistance, fEyeY * wallDistance });
+
+		if (rayTest.first < 0 || rayTest.first >= mapSize.width || rayTest.second < 0 || rayTest.second >= mapSize.height)
+		{
+			isHittingWall = true;
+			wallDistance = player->stepSize;
+		}
+		else
+		{
+			if (GetMapChar(rayTest.first * mapSize.width + rayTest.second) == '=' ||
+				GetMapChar(rayTest.first * mapSize.width + rayTest.second) == '|')
+			{
+				isHittingWall = true;
+
+				std::vector<std::pair<float, float>> p;
+
+				for (int tx = 0; tx < 2; tx++)
+					for (int ty = 0; ty < 2; ty++)
+					{
+						float vy = static_cast<float>(rayTest.second) + ty - position.fY;
+						float vx = static_cast<float>(rayTest.first) + tx - position.fX;
+						float d = sqrt(vx*vx + vy * vy);
+						float dot = (fEyeX * vx / d) + (fEyeY * vy / d);
+						p.push_back(std::make_pair(d, dot));
+					}
+
+				std::sort(p.begin(), p.end(),
+					[](const std::pair<float, float> &left, const std::pair<float, float> &right)
+				{
+					return left.first < right.first;
+				}
+				);
+
+				float boundVal = 0.01f;
+				if (acos(p.at(0).second) < boundVal) isBoundary = true;
+				if (acos(p.at(1).second) < boundVal) isBoundary = true;
+				if (acos(p.at(2).second) < boundVal) isBoundary = true;
+			}
+		}
+	}
+
+	return { wallDistance, isBoundary };
 }
 
 wchar_t Game::GetMapChar(int index)
