@@ -42,8 +42,8 @@ Game::Game()
 	mapPainting += L"|..............|";
 	mapPainting += L"================";
 
-	player = new Player(this);
-	this->output = new Buffer(this, screenWidth * screenHeight);
+	player = std::unique_ptr<Player>(new Player());
+	this->output = std::unique_ptr<Buffer>(new Buffer({ screenWidth, screenHeight }));
 }
 
 Game::Game(const std::wstring &map, const Size2D &screenSize, const Size2D &radarSize)
@@ -52,14 +52,13 @@ Game::Game(const std::wstring &map, const Size2D &screenSize, const Size2D &rada
 	this->screenSize = screenSize;
 	mapPainting = map;
 
-	player = new Player(this);
-	this->output = new Buffer(this, screenSize.width * screenSize.height);
+	player = std::unique_ptr<Player>(new Player());
+	this->output = std::unique_ptr<Buffer>(new Buffer(screenSize));
 }
 
 Game::~Game()
 {
-	delete output;
-	delete player;
+
 }
 
 void Game::Play()

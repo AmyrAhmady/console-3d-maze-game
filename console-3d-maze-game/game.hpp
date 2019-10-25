@@ -31,8 +31,8 @@ private:
 	std::wstring mapPainting;
 	Size2D mapSize;
 	Size2D screenSize;
-	Buffer *output;
-	Player *player;
+	std::unique_ptr<Buffer> output;
+	std::unique_ptr<Player> player;
 
 	float GetRayDirection(float xCoord);
 	std::pair<int, int> SendRayCast(const Vector2 &direction);
