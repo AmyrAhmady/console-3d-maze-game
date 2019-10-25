@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <chrono>
+#include <memory>
 #include <algorithm>
 #include <vector>
 #include "common.hpp"
@@ -43,10 +44,6 @@ Game::Game()
 
 	player = new Player(this);
 	this->output = new Buffer(this, screenWidth * screenHeight);
-	windowBuffer = { 0, 0, screenWidth, screenHeight };
-	consoleHandle = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
-	SetConsoleActiveScreenBuffer(consoleHandle);
-	SetConsoleWindowInfo(consoleHandle, true, &windowBuffer);
 }
 
 Game::Game(const std::wstring &map, const Size2D &screenSize, const Size2D &radarSize)
@@ -57,10 +54,6 @@ Game::Game(const std::wstring &map, const Size2D &screenSize, const Size2D &rada
 
 	player = new Player(this);
 	this->output = new Buffer(this, screenSize.width * screenSize.height);
-	windowBuffer = { 0, 0, screenSize.width, screenSize.height };
-	consoleHandle = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
-	SetConsoleActiveScreenBuffer(consoleHandle);
-	SetConsoleWindowInfo(consoleHandle, true, &windowBuffer);
 }
 
 Game::~Game()

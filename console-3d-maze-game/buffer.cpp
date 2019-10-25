@@ -11,11 +11,16 @@
 #include "game.hpp"
 #include "buffer.hpp"
 
-Buffer::Buffer(Game *phandle, size_t buffSize)
+Buffer::Buffer(const Size2D &screenSize)
 {
-	outputBuffer = new CHAR_INFO[buffSize];
-	gameHandle = phandle;
-	screenSize = gameHandle->GetScreenSize();
+	outputBuffer = new CHAR_INFO[screenSize.width * screenSize.height];
+	windowBuffer = { 0, 0, screenSize.width, screenSize.height };
+
+	console = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
+	SetConsoleActiveScreenBuffer(console);
+	SetConsoleWindowInfo(console, true, &windowBuffer);
+	
+	this->screenSize = screenSize;
 }
 
 Buffer::~Buffer()
@@ -26,12 +31,12 @@ Buffer::~Buffer()
 
 void Buffer::WriteOutput()
 {
-	WriteConsoleOutput(gameHandle->consoleHandle, outputBuffer, { screenSize.width, screenSize.height }, { 0, 0 }, &gameHandle->windowBuffer);
+	WriteConsoleOutput(console, outputBuffer, { screenSize.width, screenSize.height }, { 0, 0 }, &windowBuffer);
 }
 
 void Buffer::WriteOutput(const CHAR_INFO* buffer)
 {
-	WriteConsoleOutput(gameHandle->consoleHandle, buffer, { screenSize.width, screenSize.height }, { 0, 0 }, &gameHandle->windowBuffer);
+	WriteConsoleOutput(console, buffer, { screenSize.width, screenSize.height }, { 0, 0 }, &windowBuffer);
 }
 
 void Buffer::SetChar(wchar_t character, unsigned short attributes, int index)

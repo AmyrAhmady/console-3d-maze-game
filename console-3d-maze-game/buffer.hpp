@@ -12,7 +12,6 @@ class Buffer
 {
 public:
 	Buffer(const Size2D &screenSize);
-	Buffer(Game *phandle, size_t buffSize);
 	~Buffer();
 
 	void WriteOutput(const CHAR_INFO* buffer);
@@ -23,6 +22,7 @@ public:
 
 private:
 	CHAR_INFO *outputBuffer;
-	Game *gameHandle;
 	Size2D screenSize;
+	HANDLE console;
+	SMALL_RECT windowBuffer;
 };
