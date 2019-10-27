@@ -15,6 +15,7 @@
 #include "game.hpp"
 #include "console.hpp"
 #include "player.hpp"
+#include "color.hpp"
 
 Game::Game()
 {
@@ -115,22 +116,22 @@ void Game::Play()
 			for (int y = 0; y < screenSize.height; y++)
 			{
 				if (y <= wallHeight)
-					output->SetChar(' ', 0x0001 | 0x0002 | 0x0004, y*screenSize.width + x);
+					output->SetChar(' ', color::Black, y*screenSize.width + x);
 				else if (y > wallHeight && y <= floorDrawHeight)
 				{
-					output->SetChar(currentShade, 4 | 12, y*screenSize.width + x);
+					output->SetChar(currentShade, color::Red, y*screenSize.width + x);
 				}	
 				else
 				{
 					currentShade = GetFloorShade(y);
-					output->SetChar(currentShade, 2, y*screenSize.width + x);
+					output->SetChar(currentShade, color::Green, y*screenSize.width + x);
 				}
 			}
 		}
 
 		DrawRadar(PlayerPos);
 
-		output->SetChar('\0', 0x0001 | 0x0002 | 0x0004, screenSize.width * screenSize.height - 1);
+		output->SetChar('\0', color::Black, screenSize.width * screenSize.height - 1);
 		output->WriteOutput();
 
 	}
@@ -242,8 +243,8 @@ void Game::DrawRadar(const Vector2 &playerPos)
 	{
 		for (int ny = 0; ny < mapSize.height; ny++)
 		{
-			output->SetChar(mapPainting[ny * mapSize.width + nx], 4 | 22, ny * screenSize.width + nx);
+			output->SetChar(mapPainting[ny * mapSize.width + nx], color::bgBlueTextYellow, ny * screenSize.width + nx);
 		}
 	}
-	output->SetChar('O', 12, static_cast<int>(playerPos.fX) * screenSize.width + static_cast<int>(playerPos.fY));
+	output->SetChar('O', color::bgBlackTextRed, static_cast<int>(playerPos.fX) * screenSize.width + static_cast<int>(playerPos.fY));
 }
