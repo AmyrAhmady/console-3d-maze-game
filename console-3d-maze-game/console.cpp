@@ -29,7 +29,8 @@ Console::Console(const Size2D &screenSize)
 #else
 	outputBuffer = new sOutput[screenSize.width * screenSize.height];
 	std::cout << "\033]0;" << "Console 3D Maze Game" << "\007";
-	std::cout << "\e[8;40;120t";
+	std::cout << "\e[8;" << screenSize.height << ";" << screenSize.width << "t";
+	std::cout << "\e[?25l";
 #endif
 	
 }
