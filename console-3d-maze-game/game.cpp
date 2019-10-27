@@ -11,6 +11,7 @@
 #include <memory>
 #include <algorithm>
 #include <vector>
+#include <cmath>
 #include "common.hpp"
 #include "game.hpp"
 #include "console.hpp"
