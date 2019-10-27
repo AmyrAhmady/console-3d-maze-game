@@ -22,7 +22,7 @@ namespace color
 
 #else 
 
-namesapce color
+namespace color
 {
 	const std::string Black = "\x1b[30m";
 	const std::string Red = "\x1b[31m";
