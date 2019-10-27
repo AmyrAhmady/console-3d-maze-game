@@ -63,7 +63,7 @@ void Console::SetChar(wchar_t character, unsigned short color, int index)
 
 #else
 
-void Console::SetChar(onst std::string &character, const std::string &color, int index)
+void Console::SetChar(const std::string &character, const std::string &color, int index)
 {
 	outputBuffer[index].character = character;
 	outputBuffer[index].color = color;
