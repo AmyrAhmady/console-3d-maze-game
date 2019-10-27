@@ -8,6 +8,7 @@
 
 #pragma once
 #include <iostream>
+#include <memory>
 
 class Console;
 class Player;
