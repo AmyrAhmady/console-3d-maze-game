@@ -7,7 +7,9 @@
 */
 
 #pragma once
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
 #include <Windows.h>
+#endif
 
 struct Vector2
 {
@@ -43,6 +45,10 @@ namespace utils
 {
 	inline unsigned short IsKeyDown(char key)
 	{
-		return GetAsyncKeyState(static_cast<unsigned short>(key)) & 0x8000;
+		#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+			return GetAsyncKeyState(static_cast<unsigned short>(key)) & 0x8000;
+		#else
+			return 0;
+		#endif
 	}
 }
