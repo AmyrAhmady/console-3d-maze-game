@@ -29,12 +29,13 @@ public:
 #endif
 
 private:
+	Size2D screenSize;
+
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+	HANDLE console;
+	SMALL_RECT windowBuffer;
 	CHAR_INFO *outputBuffer;
 #else 
 	sOutput *outputBuffer;
 #endif
-	Size2D screenSize;
-	HANDLE console;
-	SMALL_RECT windowBuffer;
 };
