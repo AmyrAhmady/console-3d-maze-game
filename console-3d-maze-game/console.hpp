@@ -7,12 +7,16 @@
 */
 
 #pragma once
+#if !(defined(WIN32) || defined(_WIN32))
+#include <codecvt>
+#include <locale>
+#endif
 
 class Console
 {
 	struct sOutput
 	{
-		std::string character;
+		wchar_t character;
 		std::string color;
 	};
 
@@ -25,7 +29,7 @@ public:
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
 	void SetChar(wchar_t character, unsigned short color, int index);
 #else 
-	void SetChar(const std::string &character, const std::string &color, int index);
+	void SetChar(wchar_t character, const std::string &color, int index);
 #endif
 
 private:
@@ -37,5 +41,6 @@ private:
 	CHAR_INFO *outputBuffer;
 #else 
 	sOutput *outputBuffer;
+	std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t> convert;
 #endif
 };

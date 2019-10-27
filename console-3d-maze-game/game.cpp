@@ -117,15 +117,15 @@ void Game::Play()
 			for (int y = 0; y < screenSize.height; y++)
 			{
 				if (y <= wallHeight)
-					output->SetChar(' ', color::Black, y*screenSize.width + x);
+					output->SetChar(' ', color::Blank, y*screenSize.width + x);
 				else if (y > wallHeight && y <= floorDrawHeight)
 				{
-					output->SetChar(currentShade, color::Red, y*screenSize.width + x);
+					output->SetChar(currentShade, color::bgBlackTextRed, y*screenSize.width + x);
 				}	
 				else
 				{
 					currentShade = GetFloorShade(y);
-					output->SetChar(currentShade, color::Green, y*screenSize.width + x);
+					output->SetChar(currentShade, color::bgBlackTextGreen, y*screenSize.width + x);
 				}
 			}
 		}

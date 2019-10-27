@@ -46,10 +46,13 @@ void Console::WriteOutput()
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
 	WriteConsoleOutput(console, outputBuffer, { screenSize.width, screenSize.height }, { 0, 0 }, &windowBuffer);
 #else
-	std::string tempBuff;
+	std::string tempBuff = "";
 	std::cout << "\033[0;0H";
 	for (int i = 0; i < (screenSize.width * screenSize.height); i++)
-		tempBuff.append(outputBuffer[i].color + outputBuffer[i].character);
+	{
+		std::string character = outputBuffer[i].color + std::string(convert.to_bytes(outputBuffer[i].character));
+		tempBuff += character;
+	}
 	std::cout << tempBuff;
 #endif
 }
@@ -64,7 +67,7 @@ void Console::SetChar(wchar_t character, unsigned short color, int index)
 
 #else
 
-void Console::SetChar(const std::string &character, const std::string &color, int index)
+void Console::SetChar(wchar_t character, const std::string &color, int index)
 {
 	outputBuffer[index].character = character;
 	outputBuffer[index].color = color;
