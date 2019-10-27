@@ -18,6 +18,8 @@ namespace color
 	constexpr char Green = 2;
 	constexpr char bgBlueTextYellow  = 22;
 	constexpr char bgBlackTextRed = 12;
+	constexpr char bgBlackTextGreen = Green;
+	constexpr char Blank = 0;
 }
 
 #else 
@@ -37,6 +39,8 @@ namespace color
 
 	const std::string bgBlueTextYellow = Yellow + background::Blue;
 	const std::string bgBlackTextRed = Red + background::Black;
+	const std::string bgBlackTextGreen = Green + background::Black;
+	const std::string Blank = Black + background::Black;
 }
 
 
