@@ -36,7 +36,7 @@ int main()
 
 	Size2D screenSize;
 	screenSize.width = 120;
-	screenSize.height = 40;
+	screenSize.height = 30;
 
 	Game game(mapPainting, screenSize, mapSize);
 	game.Play();
