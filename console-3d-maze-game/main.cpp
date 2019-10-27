@@ -15,7 +15,7 @@ int main()
 	std::wstring mapPainting;
 	mapPainting += L"================";
 	mapPainting += L"|..............|";
-	mapPainting += L"|.......========";
+	mapPainting += L"|.......=======|";
 	mapPainting += L"|..............|";
 	mapPainting += L"|..............|";
 	mapPainting += L"|===...........|";

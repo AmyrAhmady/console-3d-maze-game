@@ -18,6 +18,13 @@
 #include "player.hpp"
 #include "color.hpp"
 
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+#define IsKeyDown(x) utils::win32IsKeyDown(x)
+#else
+#include "linux_keyboard.hpp"
+#define IsKeyDown(x) keyboard->linuxIsKeyDown(x)
+#endif
+
 Game::Game()
 {
 	short screenWidth = 120;
@@ -29,7 +36,7 @@ Game::Game()
 	mapPainting = L"";
 	mapPainting += L"================";
 	mapPainting += L"|..............|";
-	mapPainting += L"|.......========";
+	mapPainting += L"|.......=======|";
 	mapPainting += L"|..............|";
 	mapPainting += L"|..............|";
 	mapPainting += L"|===...........|";
@@ -65,6 +72,9 @@ Game::~Game()
 
 void Game::Play()
 {
+#if !(defined(WIN32) || defined(_WIN32))
+	std::unique_ptr<Keyboard> keyboard = std::unique_ptr<Keyboard>(new Keyboard());
+#endif
 	auto timeTick1 = std::chrono::system_clock::now();
 
 	while (1)
@@ -76,13 +86,13 @@ void Game::Play()
 		timeTick1 = timeTick2;
 		float elapsedTime = diffTime.count();
 
-		if (utils::IsKeyDown('A'))
+		if (IsKeyDown(KEY_A))
 			player->Turn(TURN_LEFT, elapsedTime);
 
-		if (utils::IsKeyDown('D'))
+		if (IsKeyDown(KEY_D))
 			player->Turn(TURN_RIGHT, elapsedTime);
 
-		if (utils::IsKeyDown('W'))
+		if (IsKeyDown(KEY_W))
 		{
 			player->Move(MOVE_FROWARD, elapsedTime);
 			Vector2 pos = player->GetPosition();
@@ -92,7 +102,7 @@ void Game::Play()
 
 		}
 
-		if (utils::IsKeyDown('S'))
+		if (IsKeyDown(KEY_S))
 		{
 			player->Move(MOVE_BACKWARD, elapsedTime);
 			Vector2 pos = player->GetPosition();

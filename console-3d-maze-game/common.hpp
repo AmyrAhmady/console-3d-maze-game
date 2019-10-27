@@ -9,6 +9,19 @@
 #pragma once
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
 #include <Windows.h>
+
+#define KEY_A 'A'
+#define KEY_S 'S'
+#define KEY_D 'D'
+#define KEY_W 'W'
+
+#else
+
+#define KEY_A 30
+#define KEY_S 31
+#define KEY_D 32
+#define KEY_W 17
+
 #endif
 
 struct Vector2
@@ -43,7 +56,7 @@ enum TURNING_TYPE
 
 namespace utils
 {
-	inline unsigned short IsKeyDown(char key)
+	inline unsigned short win32IsKeyDown(char key)
 	{
 		#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
 			return GetAsyncKeyState(static_cast<unsigned short>(key)) & 0x8000;
