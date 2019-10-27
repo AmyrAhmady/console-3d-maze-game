@@ -15,9 +15,6 @@ class Player;
 class Game
 {
 public:
-	SMALL_RECT windowBuffer;
-	HANDLE consoleHandle;
-
 	Game();
 	Game(const std::wstring &map, const Size2D &screenSize, const Size2D &radarSize);
 	~Game();
